@@ -1,0 +1,80 @@
+{
+  "floor_plan": {
+    "dimensions": {
+      "total_area": 1000,
+      "unit": "sq_ft"
+    },
+    "rooms": [
+      {
+        "name": "Living Room",
+        "width": 300,
+        "height": 300,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "doors": [
+          {
+            "position": "right",
+            "width": 50
+          },
+          {
+            "position": "bottom",
+            "width": 30
+          }
+        ]
+      },
+      {
+        "name": "Kitchen",
+        "width": 150,
+        "height": 150,
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "doors": [
+          {
+            "position": "left",
+            "width": 50
+          }
+        ],
+        "windows": [
+          {
+            "position": "top",
+            "width": 50
+          }
+        ]
+      },
+      {
+        "name": "Bedroom 1",
+        "width": 200,
+        "height": 200,
+        "position": {
+          "x": 0,
+          "y": 300
+        },
+        "doors": [
+          {
+            "position": "right",
+            "width": 30
+          }
+        ]
+      },
+      {
+        "name": "Bedroom 2",
+        "width": 200,
+        "height": 200,
+        "position": {
+          "x": 200,
+          "y": 300
+        },
+        "doors": [
+          {
+            "position": "left",
+            "width": 30
+          }
+        ]
+      }
+    ]
+  }
+}

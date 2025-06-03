@@ -31,18 +31,73 @@ class ChatMessage(BaseModel):
 @app.post("/api/chat")
 async def chat(message: ChatMessage):
     try:
+        print(message.message , "message")
         # Call OpenAI API
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a floor plan generator. When given a natural language description of a house layout, respond only with a JSON object describing the floor plan. Do NOT add extra explanation."},
+                {"role": "system", "content": """You are a floor plan generator. When given a natural language description of a house layout, respond only with a JSON object that describes the floor plan. Do NOT add extra explanation. Assume the house layout is rectangular and that all rooms will be connected to each other. Make sure that rooms are placed logically and that the floor plan is complete. Each room should have dimensions, a position (x, y), doors, and windows. The format of the response must strictly follow the structure below:
+
+{
+    "floor_plan": {
+        "dimensions": {
+            "total_area": 1000,
+            "unit": "sq_ft"
+        },
+        "rooms": [
+            {
+                "name": "Living Room",
+                "width": 300,
+                "height": 300,
+                "position": {"x": 0, "y": 0},
+                "doors": [
+                    {"position": "right", "width": 50},
+                    {"position": "bottom", "width": 30}
+                ]
+            },
+            {
+                "name": "Kitchen",
+                "width": 150,
+                "height": 150,
+                "position": {"x": 300, "y": 0},
+                "doors": [
+                    {"position": "left", "width": 50}
+                ],
+                "windows": [
+                    {"position": "top", "width": 50}
+                ]
+            },
+            {
+                "name": "Bedroom 1",
+                "width": 200,
+                "height": 200,
+                "position": {"x": 0, "y": 300},
+                "doors": [
+                    {"position": "right", "width": 30}
+                ]
+            },
+            {
+                "name": "Bedroom 2",
+                "width": 200,
+                "height": 200,
+                "position": {"x": 200, "y": 300},
+                "doors": [
+                    {"position": "left", "width": 30}
+                ]
+            }
+        ]
+    }
+}"""},
                 {"role": "user", "content": message.message}
             ]
         )
-        
+        print(response, "OpenAI Response")  # Debug the full response to inspect it.
+
         # Extract JSON from response
         json_str = response.choices[0].message.content
         floor_plan_data = json.loads(json_str)
+
+        print(floor_plan_data , "floor_plan_data")
         
         # Save JSON file
         os.makedirs("output", exist_ok=True)
