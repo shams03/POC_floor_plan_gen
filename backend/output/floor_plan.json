@@ -74,6 +74,36 @@
             "width": 30
           }
         ]
+      },
+      {
+        "name": "Kitchen",
+        "width": 150,
+        "height": 150,
+        "position": {
+          "x": 450,
+          "y": 0
+        },
+        "doors": [
+          {
+            "position": "left",
+            "width": 50
+          }
+        ]
+      },
+      {
+        "name": "Kitchen",
+        "width": 150,
+        "height": 150,
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "doors": [
+          {
+            "position": "left",
+            "width": 50
+          }
+        ]
       }
     ]
   }

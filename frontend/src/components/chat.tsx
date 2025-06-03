@@ -5,9 +5,27 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 
+interface FloorPlanData {
+  floor_plan: {
+    dimensions: {
+      total_area: number;
+      unit: string;
+    };
+    rooms: Array<{
+      name: string;
+      width: number;
+      height: number;
+      position: { x: number; y: number };
+      doors: Array<{ position: string; width: number }>;
+      windows?: Array<{ position: string; width: number }>;
+    }>;
+  };
+}
+
 interface Message {
   role: "user" | "system";
   content: string;
+  data?: FloorPlanData;
 }
 
 export function Chat() {
@@ -27,34 +45,40 @@ export function Chat() {
 
     try {
       // Send message to backend
-      console.log("Sending message to backend:", { message });  // Log the request being sent
+      console.log("Sending message to backend:", { message }); // Log the request being sent
 
       const response = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify( { message: message } ),
+        body: JSON.stringify({ message: message }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Add system response to chat
+        // Add system response to chat with JSON data
         setChatHistory((prev) => [
           ...prev,
-          { role: "system", content: "Floor plan generated successfully!" },
+          {
+            role: "system",
+            content: "Floor plan generated successfully!",
+            data: data.data, // Store the JSON data
+          },
         ]);
         setDxfReady(true);
       } else {
         throw new Error(data.detail || "Failed to generate floor plan");
       }
-    } catch (error) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
       setChatHistory((prev) => [
         ...prev,
         {
           role: "system",
-          content: "Error generating floor plan. Please try again.",
+          content: `Error generating floor plan: ${errorMessage}`,
         },
       ]);
     } finally {
@@ -76,25 +100,27 @@ export function Chat() {
       document.body.appendChild(link);
       link.click();
       link.remove();
-    } catch (error) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
       setChatHistory((prev) => [
         ...prev,
         {
           role: "system",
-          content: "Error downloading DXF file. Please try again.",
+          content: `Error downloading DXF file: ${errorMessage}`,
         },
       ]);
     }
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto h-[calc(100vh-2rem)] flex flex-col overflow-y-auto overflow-x-auto">
       <CardHeader>
         <CardTitle>Floor Plan Generator</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="h-[400px] overflow-y-auto space-y-4 p-4 border rounded-lg">
+      <CardContent className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col space-y-4">
+          <div className="flex-1 overflow-y-auto space-y-4 p-4 border rounded-lg">
             {chatHistory.map((msg, index) => (
               <div
                 key={index}
@@ -103,17 +129,34 @@ export function Chat() {
                 }`}
               >
                 <div
-                  className={`max-w-[70%] p-3 rounded-lg ${
+                  className={`max-w-[85%] p-3 rounded-lg ${
                     msg.role === "user"
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted"
                   }`}
                 >
-                  {msg.content}
+                  <div className="break-words">{msg.content}</div>
+                  {msg.data && (
+                    <pre className="mt-2 p-2 bg-background rounded text-sm overflow-x-auto whitespace-pre-wrap break-words">
+                      {JSON.stringify(msg.data, null, 2)}
+                    </pre>
+                  )}
                 </div>
               </div>
             ))}
           </div>
+
+          {dxfReady && (
+            <div className="flex justify-center py-2">
+              <Button
+                onClick={handleDownload}
+                variant="secondary"
+                className="w-full max-w-xs"
+              >
+                Download DXF
+              </Button>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <Textarea
@@ -121,26 +164,15 @@ export function Chat() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               disabled={loading}
-              className="min-h-[100px]"
+              className="min-h-[100px] resize-none"
             />
-            <div className="flex justify-between">
-              <Button
-                type="submit"
-                disabled={loading || !message.trim()}
-                className="w-full mr-2"
-              >
-                {loading ? "Generating..." : "Generate Floor Plan"}
-              </Button>
-              {dxfReady && (
-                <Button
-                  onClick={handleDownload}
-                  variant="secondary"
-                  className="w-full ml-2"
-                >
-                  Download DXF
-                </Button>
-              )}
-            </div>
+            <Button
+              type="submit"
+              disabled={loading || !message.trim()}
+              className="w-full"
+            >
+              {loading ? "Generating..." : "Generate Floor Plan"}
+            </Button>
           </form>
         </div>
       </CardContent>
