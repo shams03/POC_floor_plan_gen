@@ -42,10 +42,10 @@ def json_to_dxf(json_data, output_path):
         # Add text for the room name just above the bottom edge
         center_x = x_offset + width / 2
         center_y = y_offset  # This places the text near the bottom part of the room
-
+        label_text = f"{name} ({width}×{height})"
         # Adjust text position to avoid overlap (just above the bottom edge)
         msp.add_text(
-            name,
+            label_text,
             dxfattribs={
                 'layer': 'TEXT',
                 'height': 5,  # Much smaller text height

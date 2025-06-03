@@ -46,13 +46,19 @@ export function Chat() {
     try {
       // Send message to backend
       console.log("Sending message to backend:", { message }); // Log the request being sent
+      const updatedMessageWithHistory = [
+        ...chatHistory,
+        { role: "user", content: message },
+      ];
 
       const response = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: message }),
+        body: JSON.stringify({
+          message: JSON.stringify(updatedMessageWithHistory),
+        }),
       });
 
       const data = await response.json();

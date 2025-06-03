@@ -34,9 +34,14 @@ async def chat(message: ChatMessage):
         print(message.message , "message")
         # Call OpenAI API
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[
-                {"role": "system", "content": """You are a floor plan generator. When given a natural language description of a house layout, respond only with a JSON object that describes the floor plan. Do NOT add extra explanation. Assume the house layout is rectangular and that all rooms will be connected to each other. Make sure that rooms are placed logically and that the floor plan is complete. Each room should have dimensions, a position (x, y), doors, and windows. The format of the response must strictly follow the structure below:
+                {"role": "system", "content": """You are a floor plan generator. When given a natural language description of a house layout, respond only with a JSON object that describes the floor plan. Do NOT add extra explanation. 
+                - Every message has the context of the previous messages.
+                - Assume the house layout is rectangular and that all rooms will be connected to each other. 
+                - Make sure that rooms are placed logically and that the floor plan is complete. 
+                - Each room should have dimensions, a position (x, y), doors, and windows. 
+                - The format of the response must be like the sample but the room names and values must be as per the user message below:
 
 {
     "floor_plan": {
@@ -87,7 +92,11 @@ async def chat(message: ChatMessage):
             }
         ]
     }
-}"""},
+}
+                 
+                  - For example if the user message is "I want a house with a kitchen, bedroom, and a bathroom", the response should be like the sample but the room names and context must be as per the user message and no extra rooms should be added.
+                 - Design the floor plan in such a way that it is aesthetically pleasing and that the rooms are placed logically.
+                 """},
                 {"role": "user", "content": message.message}
             ]
         )

@@ -6,9 +6,9 @@
     },
     "rooms": [
       {
-        "name": "Living Room",
-        "width": 300,
-        "height": 300,
+        "name": "Bedroom",
+        "width": 400,
+        "height": 400,
         "position": {
           "x": 0,
           "y": 0
@@ -22,14 +22,24 @@
             "position": "bottom",
             "width": 30
           }
+        ],
+        "windows": [
+          {
+            "position": "top",
+            "width": 100
+          },
+          {
+            "position": "left",
+            "width": 100
+          }
         ]
       },
       {
         "name": "Kitchen",
-        "width": 150,
-        "height": 150,
+        "width": 200,
+        "height": 400,
         "position": {
-          "x": 300,
+          "x": 400,
           "y": 0
         },
         "doors": [
@@ -46,62 +56,17 @@
         ]
       },
       {
-        "name": "Bedroom 1",
+        "name": "Washroom",
         "width": 200,
         "height": 200,
         "position": {
           "x": 0,
-          "y": 300
+          "y": 400
         },
         "doors": [
           {
-            "position": "right",
+            "position": "top",
             "width": 30
-          }
-        ]
-      },
-      {
-        "name": "Bedroom 2",
-        "width": 200,
-        "height": 200,
-        "position": {
-          "x": 200,
-          "y": 300
-        },
-        "doors": [
-          {
-            "position": "left",
-            "width": 30
-          }
-        ]
-      },
-      {
-        "name": "Kitchen",
-        "width": 150,
-        "height": 150,
-        "position": {
-          "x": 450,
-          "y": 0
-        },
-        "doors": [
-          {
-            "position": "left",
-            "width": 50
-          }
-        ]
-      },
-      {
-        "name": "Kitchen",
-        "width": 150,
-        "height": 150,
-        "position": {
-          "x": 600,
-          "y": 0
-        },
-        "doors": [
-          {
-            "position": "left",
-            "width": 50
           }
         ]
       }
