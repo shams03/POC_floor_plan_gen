@@ -6,9 +6,9 @@
     },
     "rooms": [
       {
-        "name": "Bedroom",
-        "width": 400,
-        "height": 400,
+        "name": "Living Room",
+        "width": 300,
+        "height": 250,
         "position": {
           "x": 0,
           "y": 0
@@ -16,8 +16,25 @@
         "doors": [
           {
             "position": "right",
-            "width": 50
-          },
+            "width": 40
+          }
+        ],
+        "windows": [
+          {
+            "position": "top",
+            "width": 60
+          }
+        ]
+      },
+      {
+        "name": "Kitchen",
+        "width": 200,
+        "height": 200,
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "doors": [
           {
             "position": "bottom",
             "width": 30
@@ -26,47 +43,79 @@
         "windows": [
           {
             "position": "top",
-            "width": 100
-          },
-          {
-            "position": "left",
-            "width": 100
+            "width": 50
           }
         ]
       },
       {
-        "name": "Kitchen",
-        "width": 200,
-        "height": 400,
+        "name": "Utility",
+        "width": 100,
+        "height": 100,
         "position": {
           "x": 400,
-          "y": 0
+          "y": 200
         },
         "doors": [
           {
             "position": "left",
-            "width": 50
-          }
-        ],
-        "windows": [
-          {
-            "position": "top",
-            "width": 50
+            "width": 30
           }
         ]
       },
       {
-        "name": "Washroom",
-        "width": 200,
-        "height": 200,
+        "name": "Bathroom",
+        "width": 100,
+        "height": 100,
         "position": {
-          "x": 0,
-          "y": 400
+          "x": 200,
+          "y": 250
         },
         "doors": [
           {
             "position": "top",
             "width": 30
+          }
+        ]
+      },
+      {
+        "name": "Bedroom 1",
+        "width": 250,
+        "height": 250,
+        "position": {
+          "x": 0,
+          "y": 250
+        },
+        "doors": [
+          {
+            "position": "top",
+            "width": 30
+          }
+        ],
+        "windows": [
+          {
+            "position": "bottom",
+            "width": 60
+          }
+        ]
+      },
+      {
+        "name": "Bedroom 2",
+        "width": 250,
+        "height": 250,
+        "position": {
+          "x": 250,
+          "y": 350
+        },
+        "doors": [
+          {
+            "position": "top",
+            "width": 30
+          }
+        ],
+        "windows": [
+          {
+            "position": "bottom",
+            "width": 60
           }
         ]
       }

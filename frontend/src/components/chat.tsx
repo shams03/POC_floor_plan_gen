@@ -120,13 +120,21 @@ export function Chat() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto h-[calc(100vh-2rem)] flex flex-col overflow-y-auto overflow-x-auto">
-      <CardHeader>
-        <CardTitle>Floor Plan Generator</CardTitle>
+    <Card className="w-full max-w-4xl mx-auto h-[calc(100vh-2rem)] flex flex-col overflow-y-auto overflow-x-auto">
+      <CardHeader className="border-b pb-6">
+        <div className="space-y-2">
+          <CardTitle className="text-3xl font-bold text-center">
+            Architectural Design Assistant
+          </CardTitle>
+          <p className="text-center text-muted-foreground">
+            Transform your ideas into detailed floor plans. Describe your dream
+            space, and I'll help you create a professional architectural layout.
+          </p>
+        </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col">
+      <CardContent className="flex-1 flex flex-col p-6">
         <div className="flex-1 flex flex-col space-y-4">
-          <div className="flex-1 overflow-y-auto space-y-4 p-4 border rounded-lg">
+          <div className="flex-1 overflow-y-auto space-y-4 p-4 border rounded-lg bg-muted/30">
             {chatHistory.map((msg, index) => (
               <div
                 key={index}
@@ -135,15 +143,15 @@ export function Chat() {
                 }`}
               >
                 <div
-                  className={`max-w-[85%] p-3 rounded-lg ${
+                  className={`max-w-[85%] p-4 rounded-lg ${
                     msg.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                      : "bg-background border shadow-sm"
                   }`}
                 >
                   <div className="break-words">{msg.content}</div>
                   {msg.data && (
-                    <pre className="mt-2 p-2 bg-background rounded text-sm overflow-x-auto whitespace-pre-wrap break-words">
+                    <pre className="mt-2 p-3 bg-muted/50 rounded text-sm overflow-x-auto whitespace-pre-wrap break-words">
                       {JSON.stringify(msg.data, null, 2)}
                     </pre>
                   )}
@@ -157,27 +165,27 @@ export function Chat() {
               <Button
                 onClick={handleDownload}
                 variant="secondary"
-                className="w-full max-w-xs"
+                className="w-full max-w-xs hover:bg-primary hover:text-primary-foreground transition-colors"
               >
-                Download DXF
+                Download DXF Floor Plan
               </Button>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <Textarea
-              placeholder="Describe your floor plan..."
+              placeholder="Describe your architectural vision... (e.g., 'I want a modern 3-bedroom house with an open kitchen and living area')"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               disabled={loading}
-              className="min-h-[100px] resize-none"
+              className="min-h-[100px] resize-none bg-background"
             />
             <Button
               type="submit"
               disabled={loading || !message.trim()}
-              className="w-full"
+              className="w-full bg-primary hover:bg-primary/90 transition-colors"
             >
-              {loading ? "Generating..." : "Generate Floor Plan"}
+              {loading ? "Generating Floor Plan..." : "Generate Floor Plan"}
             </Button>
           </form>
         </div>
