@@ -113,64 +113,64 @@ def json_to_dxf(json_data, output_path):
 
 
 # Example floor plan JSON data (with advanced features like doors, windows, and corridors)
-json_data = {
-    "floor_plan": {
-        "dimensions": {
-            "total_area": 1000,
-            "unit": "sq_ft"
-        },
-        "rooms": [
-            {
-                "name": "Living Room",
-                "width": 300,
-                "height": 300,
-                "position": {"x": 0, "y": 0},
-                "doors": [
-                    {"position": "right", "width": 50},   # Door on the right wall
-                    {"position": "bottom", "width": 30}   # Door on the bottom wall
-                ]
-            },
-            {
-                "name": "Kitchen",
-                "width": 150,
-                "height": 150,
-                "position": {"x": 300, "y": 0},
-                "doors": [
-                    {"position": "left", "width": 50}    # Door on the left wall
-                ],
-                "windows": [
-                    {"position": "top", "width": 50}     # Window on the top wall
-                ]
-            },
-            {
-                "name": "Bedroom 1",
-                "width": 200,
-                "height": 200,
-                "position": {"x": 0, "y": 300},
-                "doors": [
-                    {"position": "right", "width": 30}   # Door on the right wall
-                ]
-            },
-            {
-                "name": "Bedroom 2",
-                "width": 200,
-                "height": 200,
-                "position": {"x": 200, "y": 300},
-                "doors": [
-                    {"position": "left", "width": 30}    # Door on the left wall
-                ]
-            }
-        ]
-    }
-}
+# json_data = {
+#     "floor_plan": {
+#         "dimensions": {
+#             "total_area": 1000,
+#             "unit": "sq_ft"
+#         },
+#         "rooms": [
+#             {
+#                 "name": "Living Room",
+#                 "width": 300,
+#                 "height": 300,
+#                 "position": {"x": 0, "y": 0},
+#                 "doors": [
+#                     {"position": "right", "width": 50},   # Door on the right wall
+#                     {"position": "bottom", "width": 30}   # Door on the bottom wall
+#                 ]
+#             },
+#             {
+#                 "name": "Kitchen",
+#                 "width": 150,
+#                 "height": 150,
+#                 "position": {"x": 300, "y": 0},
+#                 "doors": [
+#                     {"position": "left", "width": 50}    # Door on the left wall
+#                 ],
+#                 "windows": [
+#                     {"position": "top", "width": 50}     # Window on the top wall
+#                 ]
+#             },
+#             {
+#                 "name": "Bedroom 1",
+#                 "width": 200,
+#                 "height": 200,
+#                 "position": {"x": 0, "y": 300},
+#                 "doors": [
+#                     {"position": "right", "width": 30}   # Door on the right wall
+#                 ]
+#             },
+#             {
+#                 "name": "Bedroom 2",
+#                 "width": 200,
+#                 "height": 200,
+#                 "position": {"x": 200, "y": 300},
+#                 "doors": [
+#                     {"position": "left", "width": 30}    # Door on the left wall
+#                 ]
+#             }
+#         ]
+#     }
+# }
 
-# Define output path for the DXF file
-output_path = "floor_plan_with_smaller_labels.dxf"
+# # Define output path for the DXF file
+# output_path = "floor_plan_with_smaller_labels.dxf"
 
-# Convert JSON to DXF
-result = json_to_dxf(json_data, output_path)
+# # Convert JSON to DXF
+# result = json_to_dxf(json_data, output_path)
 
-print(f"DXF file saved at: {result}")
+# print(f"DXF file saved at: {result}")
 
 
 #--------------------------------------------------------------------------------------

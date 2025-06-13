@@ -46,22 +46,25 @@ export function Chat() {
     try {
       // Send message to backend
       console.log("Sending message to backend:", { message }); // Log the request being sent
-      const updatedMessageWithHistory = [
-        ...chatHistory,
-        { role: "user", content: message },
-      ];
+      // const updatedMessageWithHistory = [
+      //   ...chatHistory,
+      //   { role: "user", content: message },
+      // ];
 
       const response = await fetch("http://localhost:8000/api/chat", {
+        cache: "no-store",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: JSON.stringify(updatedMessageWithHistory),
+          message: JSON.stringify(message),
         }),
       });
 
       const data = await response.json();
+
+      console.log(data , "data")
 
       if (response.ok) {
         // Add system response to chat with JSON data
@@ -95,7 +98,11 @@ export function Chat() {
 
   const handleDownload = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/download");
+      console.log("Downloading DXF file...");
+      const response = await fetch("http://localhost:8000/api/download",{
+        cache: "no-store",
+      });
+      console.log(response , "response after download")
       if (!response.ok) throw new Error("Failed to download file");
 
       const blob = await response.blob();
@@ -128,7 +135,7 @@ export function Chat() {
           </CardTitle>
           <p className="text-center text-muted-foreground">
             Transform your ideas into detailed floor plans. Describe your dream
-            space, and I'll help you create a professional architectural layout.
+            space, and I&apos;ll help you create a professional architectural layout.
           </p>
         </div>
       </CardHeader>
@@ -150,11 +157,18 @@ export function Chat() {
                   }`}
                 >
                   <div className="break-words">{msg.content}</div>
-                  {msg.data && (
+                  {/* {msg.data && (
                     <pre className="mt-2 p-3 bg-muted/50 rounded text-sm overflow-x-auto whitespace-pre-wrap break-words">
                       {JSON.stringify(msg.data, null, 2)}
                     </pre>
-                  )}
+                  )
+                  } */}
+                    {/* {msg.data && (
+                    <pre className="mt-2 p-3 bg-muted/50 rounded text-sm overflow-x-auto whitespace-pre-wrap break-words">
+                      {JSON.stringify(msg.data, null, 2)}
+                    </pre>
+                  )
+                  } */}
                 </div>
               </div>
             ))}

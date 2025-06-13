@@ -25,13 +25,51 @@ app.add_middleware(
 # Configure OpenAI
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+curr_room_size_global = '1'
+ind1 = 0
+ind2 = 0
+ind3 = 0
+ind4 = 0
+
 class ChatMessage(BaseModel):
     message: str
 
 @app.post("/api/chat")
 async def chat(message: ChatMessage):
     try:
-        print(message.message , "message")
+        global curr_room_size_global
+        global ind2
+        global ind3
+        global ind4
+        global ind1
+        values2 = ['2', '22', '222']
+        values3 = ['3', '33', '333']
+        values4 = ['4', '44']
+        values1 = ['1', '11' , '111']
+        print(message.message , "message" , type(message.message))
+
+        if '2' in message.message:
+            curr_room_size_global = values2[ind2]
+            ind2 += 1
+            ind2 = ind2 % len(values2)
+        elif '3' in message.message:
+            curr_room_size_global = values3[ind3]
+            ind3 += 1
+            ind3 = ind3 % len(values3)
+        elif '4' in message.message:
+            curr_room_size_global = values4[ind4]
+            ind4 += 1
+            ind4 = ind4 % len(values4)
+        elif '1' in message.message:
+            curr_room_size_global = values1[ind1]
+            ind1 += 1
+            ind1 = ind1 % len(values1)
+        else:
+            curr_room_size_global = ''
+
+        print(curr_room_size_global , "curr_room_size_global")
+        
+
         # Call OpenAI API
         response = openai.chat.completions.create(
             model="gpt-4",
@@ -43,7 +81,7 @@ async def chat(message: ChatMessage):
                 - Each room should have dimensions, a position (x, y), doors, and windows. 
                 - The format of the response must be like the sample but the room names and values must be as per the user message below:
 
-{
+ {
     "floor_plan": {
         "dimensions": {
             "total_area": 1000,
@@ -92,7 +130,7 @@ async def chat(message: ChatMessage):
             }
         ]
     }
-}
+ }
                  
                   - For example if the user message is "I want a house with a kitchen, bedroom, and a bathroom", the response should be like the sample but the room names and context must be as per the user message and no extra rooms should be added.
                  - Design the floor plan in such a way that it is aesthetically pleasing and that the rooms are placed logically.
@@ -130,7 +168,17 @@ async def chat(message: ChatMessage):
 
 @app.get("/api/download")
 async def download_file():
-    file_path = "output/floor_plan.dxf"
+    global curr_room_size_global
+    file_path = f"output/floor_plan{curr_room_size_global}.dxf"
+    print(file_path , "file_path in api/download")
+    # file_path = "output/floor_plan.dxf"
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found")
-    return FileResponse(file_path, filename="floor_plan.dxf") 
+    return FileResponse(file_path, filename=f"floor_plan{curr_room_size_global}.dxf") 
+
+# @app.get("/api/download_mock")
+# async def download_file_mock(chat_history:str):
+#     file_path = f"output/floor_plan{chat_history}.dxf"
+#     if not os.path.exists(file_path):
+#         raise HTTPException(status_code=404, detail="File not found")
+#     return FileResponse(file_path, filename=f"floor_plan{chat_history}.dxf") 
